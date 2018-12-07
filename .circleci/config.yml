@@ -2,9 +2,9 @@
 version: 2
 jobs:
   deploy:
-    working_directory: ~/data_engine_api
+    working_directory: ~/
     docker:
-      - image: circleci/python:3.7.0
+      - image: sleyva97/chart
         environment:
           STAQ_ENV: test
 
