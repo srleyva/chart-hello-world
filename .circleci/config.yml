@@ -4,7 +4,7 @@ jobs:
   deploy:
     working_directory: ~/
     docker:
-      - image: sleyva97/chart
+      - image: sleyva97/chart:0.0.1
         environment:
           STAQ_ENV: test
 
