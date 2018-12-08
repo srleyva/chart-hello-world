@@ -16,7 +16,7 @@ jobs:
           gcloud container clusters get-credentials ${CLUSTER_NAME}
       - run:
           name: Deploy to K8s
-          command: 'chart -n stephen -r test install'
+          command: 'chart -n stephen -r test print && helm upgrade --install test stephen/'
 
 workflows:
   version: 2
