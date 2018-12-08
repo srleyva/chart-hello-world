@@ -1,5 +1,5 @@
 image:
-  repository: nginx
-  tag: stable
+  repository: gcr.io/nifi-staq-test/chart-hello-world
+  tag: latest
 service:
   type: LoadBalancer
