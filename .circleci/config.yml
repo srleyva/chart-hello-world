@@ -10,7 +10,7 @@ jobs:
           name: Deploy to K8s
           environment:
             CHART_COMMAND: print
-          command: 'pwd'
+          command: 'cue-execute'
   deploy:
     docker:
       - image: sleyva97/chart:0.0.1
@@ -20,7 +20,7 @@ jobs:
           name: Deploy to K8s
           environment:
             CHART_COMMAND: install
-          command: 'pwd'
+          command: 'cue-execute'
 
 workflows:
   version: 2
