@@ -27,7 +27,7 @@ jobs:
     steps:
       - checkout
       - run: |
-        printf 'Intergration tests go here...'
+          printf 'Intergration tests go here...'
   publish:
     docker:
       - image: google/cloud-sdk
