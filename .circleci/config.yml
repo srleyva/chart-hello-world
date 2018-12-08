@@ -57,13 +57,13 @@ workflows:
   build-package-deploy:
     jobs:
       - unit
-      - build
+      - build:
           requires:
             - unit
-      - integration
+      - integration:
           requires:
             - build
-      - publish
+      - publish:
           requires:
             - integration
       - deploy:
