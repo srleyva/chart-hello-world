@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run : |
-          go test
+          printf 'Unit tests go here...'
   build:
     docker:
       - image: google/cloud-sdk
