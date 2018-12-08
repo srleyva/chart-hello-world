@@ -27,4 +27,6 @@ workflows:
   build-package-deploy:
     jobs:
       - print
-      - deploy
+      - deploy:
+          requires:
+            - print
