@@ -39,7 +39,8 @@ jobs:
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
           gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
           gcloud auth configure-docker
-          docker build . -t "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:latest"
+          docker pull "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1"
+          docker tag "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1" "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:latest"
           docker push "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:latest"
   deploy:
     docker:
