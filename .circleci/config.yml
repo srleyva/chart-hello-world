@@ -1,25 +1,30 @@
 # https://circleci.com/docs/2.0/language-python/
 version: 2
 jobs:
+  print:
+    docker:
+      - image: sleyva97/chart:0.0.1
+    steps:
+      - checkout
+      - run:
+          name: Deploy to K8s
+          environment:
+            CHART_COMMAND: print
+          command: 'pwd'
   deploy:
     docker:
       - image: sleyva97/chart:0.0.1
-        environment:
-          STAQ_ENV: test
-
     steps:
       - checkout
-      - run: |
-          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-          gcloud container clusters get-credentials ${CLUSTER_NAME}
       - run:
           name: Deploy to K8s
-          command: 'chart -n stephen -r test install -f values.yaml'
+          environment:
+            CHART_COMMAND: install
+          command: 'pwd'
 
 workflows:
   version: 2
   build-package-deploy:
     jobs:
+      - print
       - deploy
