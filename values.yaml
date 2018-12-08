@@ -1,5 +1,5 @@
 image:
-  repository: nginx
-  tag: stable
+  repository: tutum/hello-world
+  tag: latest
 service:
   type: LoadBalancer
