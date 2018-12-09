@@ -19,15 +19,19 @@ jobs:
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
           gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
           gcloud auth configure-docker
-          docker build . -t "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1"
-          docker push "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1"
+          docker build . -t "gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1"
+          docker push "gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1"
   integration:
     docker:
       - image: google/cloud-sdk
     steps:
       - checkout
       - run: |
-          printf 'Intergration tests go here...'
+          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+          gcloud auth configure-docker
+          docker-compose up
   publish:
     docker:
       - image: google/cloud-sdk
@@ -39,9 +43,9 @@ jobs:
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
           gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
           gcloud auth configure-docker
-          docker pull "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1"
-          docker tag "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1" "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:latest"
-          docker push "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:latest"
+          docker pull "gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1"
+          docker tag "gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1" "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:latest"
+          docker push "gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME:latest"
   deploy:
     docker:
       - image: sleyva97/chart:0.0.1

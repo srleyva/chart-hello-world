@@ -1,0 +1,6 @@
+version: '3'
+services:
+  web:
+    image: "gcr.io/${GOOGLE_PROJECT_ID}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+    ports:
+     - "8080:80"
