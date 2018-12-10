@@ -49,15 +49,27 @@ jobs:
           docker pull "gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1"
           docker tag "gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1" "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:latest"
           docker push "gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME:latest"
-  deploy:
+  deploy-staging:
     docker:
       - image: sleyva97/chart:0.0.1
     steps:
       - checkout
       - run:
-          name: Deploy to K8s
+          name: Deploy to K8s Staging
           environment:
             CHART_COMMAND: install
+            CLUSTER_NAME: k8s-test-staging
+          command: 'entrypoint'
+  deploy-prod:
+    docker:
+      - image: sleyva97/chart:0.0.1
+    steps:
+      - checkout
+      - run:
+          name: Deploy to K8s Prod
+          environment:
+            CHART_COMMAND: install
+            CLUSTER_NAME: k8s-test-prod
           command: 'entrypoint'
 
 workflows:
@@ -74,6 +86,9 @@ workflows:
       - publish:
           requires:
             - integration
-      - deploy:
+      - deploy-staging:
           requires:
             - publish
+      - deploy-prod:
+          requires:
+            - deploy-staging
