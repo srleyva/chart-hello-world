@@ -10,7 +10,7 @@ jobs:
           printf 'Unit tests go here...'
   build:
     docker:
-      - image: srleyva/docker-build:0.0.1
+      - image: sleyva97/docker-build:0.0.1
     steps:
       - checkout
       - setup_remote_docker
@@ -33,7 +33,7 @@ jobs:
           docker-compose up -d
   publish:
     docker:
-      - image: srleyva/docker-publish:0.0.1
+      - image: sleyva97/docker-publish:0.0.1
     steps:
       - checkout
       - setup_remote_docker
