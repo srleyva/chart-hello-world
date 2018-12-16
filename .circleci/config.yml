@@ -10,17 +10,13 @@ jobs:
           printf 'Unit tests go here...'
   build:
     docker:
-      - image: google/cloud-sdk
+      - image: srleyva/docker-build:0.0.1
     steps:
       - checkout
       - setup_remote_docker
-      - run: |
-          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-          gcloud auth configure-docker
-          docker build . -t "gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1"
-          docker push "gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1"
+      - run:
+          name: Build and cache docker image
+          command: 'entrypoint'
   integration:
     docker:
       - image: google/cloud-sdk
@@ -37,18 +33,13 @@ jobs:
           docker-compose up -d
   publish:
     docker:
-      - image: google/cloud-sdk
+      - image: srleyva/docker-publish:0.0.1
     steps:
       - checkout
       - setup_remote_docker
-      - run: |
-          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-          gcloud auth configure-docker
-          docker pull "gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1"
-          docker tag "gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1" "gcr.io/nifi-staq-test/$CIRCLE_PROJECT_REPONAME:latest"
-          docker push "gcr.io/$GOOGLE_PROJECT_ID/$CIRCLE_PROJECT_REPONAME:latest"
+      - run:
+          name: Publish Docker image for production use
+          command: 'entrypoint'
   deploy-staging:
     docker:
       - image: sleyva97/chart:0.0.1
