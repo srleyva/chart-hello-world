@@ -1,5 +1,5 @@
 image:
-  repository: gcr.io/nifi-staq-test/chart-hello-world
+  repository: gcr.io/k8s-lab-225719/chart-hello-world
   tag: latest
 service:
   type: LoadBalancer
