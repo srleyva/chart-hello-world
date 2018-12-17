@@ -10,7 +10,7 @@ jobs:
           printf 'Unit tests go here...'
   build:
     docker:
-      - image: sleyva97/docker-build:0.0.1
+      - image: sleyva97/docker-build:0.0.2
     steps:
       - checkout
       - setup_remote_docker
@@ -33,7 +33,7 @@ jobs:
           docker-compose up -d
   publish:
     docker:
-      - image: sleyva97/docker-publish:0.0.1
+      - image: sleyva97/docker-publish:0.0.2
     steps:
       - checkout
       - setup_remote_docker
@@ -49,7 +49,7 @@ jobs:
           name: Deploy to K8s Staging
           environment:
             CHART_COMMAND: install
-            CLUSTER_NAME: k8s-test-staging
+            CLUSTER_NAME: k8s-lab-staging
           command: 'entrypoint'
   deploy-prod:
     docker:
@@ -60,7 +60,7 @@ jobs:
           name: Deploy to K8s Prod
           environment:
             CHART_COMMAND: install
-            CLUSTER_NAME: k8s-test-prod
+            CLUSTER_NAME: k8s-lab-prod
           command: 'entrypoint'
 
 workflows:
