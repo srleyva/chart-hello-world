@@ -76,5 +76,5 @@ func main() {
 	e.POST("/vending/:amount", machine.Post)
 	e.PUT("/vending/:amount", machine.Put)
 
-	e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start(":80"))
 }
