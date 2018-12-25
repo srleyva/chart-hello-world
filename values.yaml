@@ -1,5 +1,6 @@
 image:
   repository: gcr.io/k8s-lab-225719/chart-hello-world
   tag: latest
+  pullPolicy: Always
 service:
   type: LoadBalancer
