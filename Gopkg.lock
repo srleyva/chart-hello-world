@@ -3,6 +3,14 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:f3974e105d2a91a34959c0af93b99a31eca0790f9f7974f259949087ff5485d7"
+  name = "github.com/0neSe7en/echo-prometheus"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "4437f5f813eebe43632891baa873c0209e4a9726"
+
+[[projects]]
+  branch = "master"
   digest = "1:d6afaeed1502aa28e80a4ed0981d570ad91b2579193404256ce672ed0a609e0d"
   name = "github.com/beorn7/perks"
   packages = ["quantile"]
@@ -157,9 +165,11 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/0neSe7en/echo-prometheus",
     "github.com/labstack/echo",
     "github.com/labstack/echo/middleware",
     "github.com/labstack/gommon/log",
+    "github.com/prometheus/client_golang/prometheus",
     "github.com/prometheus/client_golang/prometheus/promhttp",
   ]
   solver-name = "gps-cdcl"
