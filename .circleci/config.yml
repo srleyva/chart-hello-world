@@ -3,11 +3,12 @@ version: 2
 jobs:
   unit:
     docker:
-      - image: golang:alpine
+      - image: golang
+    working_directory: /go/src/github.com/srleyva/hello-world
     steps:
       - checkout
       - run : |
-          printf 'Unit tests go here...'
+          go test -v
   build:
     docker:
       - image: sleyva97/docker-build:0.0.1
